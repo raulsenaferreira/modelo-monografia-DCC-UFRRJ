@@ -1,0 +1,817 @@
+\documentclass[14]{beamer}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{pgf,tikz}
+\usepackage{ragged2e}
+ \usepackage{epstopdf}
+%%%
+%%% Comandos para símbolos de conjuntos numéricos
+%%%
+\def\C{{\ensuremath \mathbb{C}}} %%% Conjunto dos números Complexos
+\def\I{{\ensuremath \mathbb{I}}} %%% Conjunto dos números Irracionais
+\def\N{{\ensuremath \mathbb{N}}} %%% Conjunto dos números Naturais
+\def\P{{\ensuremath \mathbb{P}}} %%% Conjunto dos números Primos
+\def\Q{{\ensuremath \mathbb{Q}}} %%% Conjunto dos números Racionais
+\def\R{{\ensuremath \mathbb{R}}} %%% Conjunto dos números Reais
+\def\Z{{\ensuremath \mathbb{Z}}} %%% Conjunto dos números Inteiros
+%%%
+%\setbeamertemplate{navigation symbols}{}% retirar pequenos símbolos de navegação
+%\usetheme{Warsaw}
+\usetheme{Darmstadt}
+\usecolortheme{crane}% muda a cor do slide 1 wolverine - amarelo+laranja 2 seagull - cinza --- 3 crane amarelo
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\newcommand{\quadro}[1]{
+\tikzstyle{mybox} = [draw=craneorange, fill=craneorange!20, very thick,
+    rectangle, rounded corners, inner sep=1pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=craneorange, text=white, ellipse]
+%
+\begin{tikzpicture}[transform shape, rotate=0, baseline=-3.5cm]
+\node [mybox] (box) {%
+    \begin{minipage}[t!]{0.5\textwidth}
+        #1
+    \end{minipage}
+    };
+\end{tikzpicture}}
+
+%\setbeamertemplate{footline}[page number] % adiciona numero as paginas
+\title[Métodos Numéricos]{Métodos Numéricos}
+\author{Daniela Cristina Lübke}
+\institute{Universidade Federal Rural do Rio de Janeiro - UFRRJ\\\includegraphics[width=2cm]{logo}\\}
+\date{28 de Novembro, 2013}
+%%%
+%%%
+%%% Fonte caligráfica
+%%%
+\font\caligrafica=callig15.mf  scaled 3000 % Fonte caligráfica
+%%%
+%%%
+\begin{document}
+%%%
+ \graphicspath{{Imagens/}} %%% Esse comando diz ao tex o endereço das imagens.
+%%%                           Nesse caso, a pasta "Imagens", por omissão, fica
+%%%                           subentendido que as imagens estão na mesma pasta
+%%%                           do arquivo tex, do contrário o caminho completo
+%%%                           deve ser especificado.
+
+ \begin{frame}
+ \titlepage
+ \end{frame}
+
+\begin{frame}{Roteiro}
+  \tableofcontents
+\end{frame}
+
+\section{Motivação}
+
+\begin{frame}{Motivação}
+\begin{itemize}
+\item A maioria dos problemas não possuem solução algébrica. Notadamente os de interesse prático;
+\item\visible<2->{Problemas reais são resolvidos através de Métodos Numéricos;}
+\end{itemize}
+\vspace{1cm}
+\visible<3->{\begin{center} \includegraphics[scale=0.6]{problema} \end{center}}
+ \end{frame}
+
+\section{Método Numérico}
+\begin{frame}{Método Numérico}
+\begin{block}{O que é um Método Numérico?}
+   Um Método Numérico é um conjunto de procedimentos numéricos, que se aplicam
+repetidamente (iterativo) para aproximar a solução de um problema.
+\end{block}
+\begin{block}{Para que servem os Métodos Numéricos?}
+  Para resolver problemas não solúveis pela matemática clássica - algébrica
+\end{block}
+\end{frame}
+
+\begin{frame}{Exemplo Método Numérico simples e eficiente}
+\begin{block}{Raiz quadrada}
+   Calcular a raíz quadrada de $a=1312$.
+   \begin{description}
+  \item[Método Numérico:] consiste em escolher (chutar) uma aproximação
+       inicial $a_0 >0$ e aplicar a fórmula
+       \begin{equation}\label{raiz}
+             a_n = \dfrac{1}{2}\left(a_{n-1} + \dfrac{a}{a_{n-1}}\right)\,\,\, n=1,2,3,\ldots
+       \end{equation}
+       repetidamente até atingir uma aproximação satisfatória.
+  \item[Aplicação do Método Numérico:] utilizando como ponto inicial $a_0=137$
+       tem-se cálculos acessíveis até para um aluno do ensino fundamental, os quais seguem:
+  \end{description}
+\end{block}
+\end{frame}
+%%%
+\begin{frame}{Exemplo Método Numérico simples e eficiente}
+\begin{block}{Raiz quadrada}
+       \begin{eqnarray*}
+         a_1 &=& \dfrac{1}{2}\left(a_0+\dfrac{a}{a_0}\right)\Longrightarrow a_1=\dfrac{1}{2}\left(137+\dfrac{1312}{137}\right)\Longrightarrow a_1\thickapprox 73,28 \\
+         a_2 &=& \dfrac{1}{2}\left(a_1+\dfrac{a}{a_1}\right)\Longrightarrow a_2=\dfrac{1}{2}\left(73+\dfrac{1312}{73}\right)\Longrightarrow a_2\thickapprox 45,48\\
+         a_3 &=& \dfrac{1}{2}\left(a_2+\dfrac{a}{a_2}\right)\Longrightarrow a_3=\dfrac{1}{2}\left(45+\dfrac{1312}{45}\right)\Longrightarrow a_3\thickapprox 37,07\\
+         a_4 &=& \dfrac{1}{2}\left(a_3+\dfrac{a}{a_3}\right)\Longrightarrow a_4=\dfrac{1}{2}\left(37+\dfrac{1312}{37}\right)\Longrightarrow a_4\thickapprox 36,2297
+       \end{eqnarray*}
+
+Os termos $a_1, a_2, a_3, a_4,\ldots$ são aproximações para a raiz de $a=1312$ e
+quanto maior o índice melhor é a aproximação.
+\end{block}
+\end{frame}
+%%%
+\begin{frame}{Exemplo Método Numérico simples e eficiente}
+\begin{block}{Raiz quadrada}
+
+Para $a_4$ temos $a_4^2-a\thickapprox 1312,59 - 1312=0,59.$
+Daí vê-se que $a_4$ está próximo da raiz desejada, mas essa ainda é uma
+aproximação grosseira que pode ser melhorada. Calculemos $a_5$.
+\begin{eqnarray*}
+   a_5 &=& \dfrac{1}{2}\left(a_4+\dfrac{a}{a_4}\right)\Longrightarrow a_5=\dfrac{1}{2}\left(36,2297+\dfrac{1312}{36,2297}\right)\Longrightarrow
+\end{eqnarray*}
+\[
+a_5\thickapprox 36,221541
+\]
+E $a_5$ é uma boa aproximação para $\sqrt{1312}$, pois $a_5^2\thickapprox1312,000324146$.
+\[
+\sqrt{1312} \thickapprox 36,221541
+\]
+
+Melhores aproximações para $\sqrt{a}$ poderiam ser determinadas calculando-se
+$a_6, a_7$ e assim sucessivamente.
+\end{block}
+\end{frame}
+\section{Equações Diferenciais}
+\subsection{Método das Diferenças Finitas}
+%\subsection{EDO's}
+%\subsection{EDP's}
+
+ \begin{frame}{Ingredientes Básicos - Discretização}
+
+%O MDF é um método para resolução de Equações Diferenciais - ED's.
+
+Os problemas envolvendo ED's encontram-se em um espaço infinito e o MDF discretiza o domínio do problema
+criando uma malha. \\
+\vspace{1cm}
+Está malha é composta de nós. Cada nó é separado por uma distância $h$
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \x in {0,...,10}
+\draw[xshift=\x cm] (0pt,-1pt) -- (0pt,1pt);
+\draw (0,0)--(10,0)
+(0,0) node [below] {$\underbrace{x_1}_a$}
+(0.5,0.5) node [below] {$h$}
+(1,0) node [below] {$x_2$}
+(1.5,0.5) node [below] {$h$}
+(2,0) node [below] {$x_3$}
+(2.5,0.5) node [below] {$h$}
+(6,0) node [below] {$x_j$}
+(6.5,0.5) node [below] {$h$}
+(9.5,0.5) node [below] {$h$}
+(10,0) node [below] {$\underbrace{x_{n+1}}_b$};
+\end{tikzpicture}
+\end{center}
+
+ \end{frame}
+
+
+ \begin{frame}{Ingredientes Básicos - Série de Taylor}
+ O MDF aproxima a derivada em cada nó da malha utilizando expressões
+algébricas que são obtidas ao truncar a Série de Taylor:
+
+\begin{block}{}
+$f(x)=f(a)(x-a)^0+ \dfrac{f'(a)(x-a)^1}{1!}+...+\dfrac{f^{n}(a)(x-a)^n}{n!}$
+\end{block}
+
+\begin{block}{}
+\[u(a+h)=u(a)+hu'(a)+ \dfrac{h^2}{2!}u''(a)+...+\dfrac{h^n}{n!}u^{(n)}(a)\]
+\end{block}
+\end{frame}
+
+\begin{frame}{Ingredientes Básicos - Aproximação da derivada}
+
+\begin{block}{}
+\begin{equation}\label{Taylor2}
+u(a-h)\approx u(a) - hu'(a) + \dfrac{h^2u''(a)}{2!} - \dfrac{h^3u'''(a)}{3!} + \dfrac{h^4u''''(a)}{4!}
+\end{equation}
+
+\begin{equation}\label{Taylor3}
+u(a+h) \approx u(a) + hu'(a) + \dfrac{h^2u''(a)}{2!}+\dfrac{h^3u'''(a)}{3!} + \dfrac{h^4u''''(a)}{4!}
+\end{equation}
+
+\begin{equation}\label{AproxDer2}
+u''(a)=\dfrac{u(a-h)-2u(a)+u(a+h)}{h^2}
+\end{equation}
+\end{block}
+\end{frame}
+
+\begin{frame}{Exemplo de aplicação - Solução de EDO}
+\begin{block}{}
+\begin{equation}\label{PVC}
+\left\{
+\begin{array}{l}
+-u''(x)+\rho u(x)=f(x), \qquad 0<x<1,\quad \rho\geq{0}
+\\
+u(0)=u(1)=0
+\end{array}\right.
+\end{equation}
+em que $f(x)$ é conhecida e $y$ é desconhecida. O objetivo deste problema é encontrar $y(x)$ que satisfaça as condições impostas pelo PVC.
+\end{block}
+\begin{block}{}
+\begin{equation}
+u''(a)=\dfrac{u(a-h)-2u(a)+u(a+h)}{h^2}
+\end{equation}
+Devido a condição de contorno $u(x_1)=u(x_{n+1})=0$, basta aplicar essa equação aos pontos interiores a malhas $x$, ou seja, $x_2, x_3, \ldots, x_n$.
+\end{block}
+\end{frame}
+
+
+
+\begin{frame}{Exemplo de aplicação - Fórmula de recorrência}
+\begin{block}{}
+Considerando a aproximação no $j-$ésimo ponto da malha, a substituição
+da equação (\ref{AproxDer2}) no PVC fornece
+\begin{center}
+\begin{tikzpicture}
+\foreach \x in {0,...,2}
+\draw[xshift=\x cm] (0pt,-1pt) -- (0pt,1pt);
+\draw (0,0)--(2,0)
+(0,0) node [below] {$\underbrace{a-h}_{x_{j-1}}$}
+(1,0) node [below] {$\underbrace{a}_{x_j}$}
+(2,0) node [below] {$\underbrace{a+h}_{x_{j+1}}$};
+\end{tikzpicture}
+\end{center}
+\[
+-\dfrac{u(x_{j-1})-2u(x_j)+u(x_{j+1})}{h^2} + \rho\cdot u(x_j)= f(x_j)
+\]
+
+Substituindo $u(x_{j-1})=u_{j-1}, u(x_{j})=u_j$
+e $f(x_j)=f_j$, para facilitar a notação, temos:
+
+\[
+\dfrac{-u_{j-1}+2u_j-u_{j+1}}{h^2} + \dfrac{h^2\rho\cdot u_j}{h^2}= f_j
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{Exemplo de aplicação - Fórmula de recorrência}
+\begin{block}{}
+Efetuando as simplificações apropriadas temos
+
+\[
+\dfrac{1}{h^2}\left(-u_{j-1}+(2+ \rho h^2)u_j-u_{j+1}\right)= f_j, \quad \forall j=2,\ldots, n
+\]
+Quando $j$ varia de $2$ a $n$ são descritas $n-1$ equações lineares:
+\begin{eqnarray*}
+  j=2 &\Longrightarrow& \dfrac{1}{h^2}\left(-u_1+(2+ \rho h^2)u_2-u_3\right)= f_2 \\
+  j=3 &\Longrightarrow& \dfrac{1}{h^2}\left(-u_2+(2+ \rho h^2)u_3-u_4\right)= f_3 \\
+  %j=4 &\Longrightarrow& \dfrac{1}{h^2}\left(-u_3+(2+ \rho h^2)u_4-u_5\right)= f_4 \\
+  %\vdots &\qquad\vdots& \qquad\qquad\vdots \qquad\qquad\vdots \qquad\qquad\vdots\qquad \\
+  %j=i &\Longrightarrow& \dfrac{1}{h^2}\left(-u_{i-1}+(2+ \rho h^2)u_i-u_{i+1}\right)= f_i\\
+ \vdots &\qquad\vdots& \qquad\qquad\vdots \qquad\qquad\vdots \qquad\qquad\vdots\qquad \\
+  j=n-1 &\Longrightarrow& \dfrac{1}{h^2}\left(-u_{n-2}+(2+ \rho h^2)u_{n-1}-u_{n}\right)= f_{n-1} \\
+  j=n &\Longrightarrow& \dfrac{1}{h^2}\left(-u_{n-1}+(2+ \rho h^2)u_n-u_{n+1}\right)= f_n \\
+\end{eqnarray*}
+\end{block}
+\end{frame}
+
+\begin{frame}{Exemplo de aplicação - O sistema resultante}
+\begin{block}{}
+\[
+\tiny
+\left\{\hspace{-0.2cm}
+\begin{array}{cccccccc}
+  \dfrac{(2 + \rho h^2)u_2}{h^2}&\hspace{-0.5cm}-\dfrac{u_3}{h^2}&\hspace{-0.8cm}+0u_4&
+  +0u_5&\hspace{-0.5cm}+\ldots& \ldots&\hspace{-1cm}+0u_n&\hspace{-0.5cm}=f_2 \\ [11pt]
+  -\dfrac{u_2}{h^2}&\hspace{-0.5cm} +\dfrac{(2+ \rho h^2)u_3}{h^2}&
+  \hspace{-0.8cm}-\dfrac{u_4}{h^2}&+0u_5&\hspace{-0.5cm}+\ldots&
+  \ldots&\hspace{-1cm}+0u_n&\hspace{-0.5cm}=f_3 \\ [11pt]
+  0u_2&\hspace{-0.5cm}-\dfrac{u_3}{h^2}&\hspace{-0.8cm}+\dfrac{(2+ \rho h^2)u_4}{h^2}&-\dfrac{u_5}{h^2}&\hspace{-0.5cm}+\ldots&\ldots&
+  \hspace{-1cm}+0u_n&\hspace{-0.5cm}=f_4 \\ [11pt]
+  \vdots &\vdots& \vdots& \vdots&\vdots &\vdots&\hspace{-0.8cm}\vdots& \vdots\\
+  0u_2&\hspace{-0.5cm}+0u_3&\hspace{-0.8cm}+0u_4&\ldots&
+  -\dfrac{u_{n-2}}{h^2}& +\dfrac{(2+ \rho h^2)u_{n-1}}{h^2}&\hspace{-1cm}-\dfrac{u_n}{h^2}&\hspace{-0.2cm}=f_{n-1}\\ [11pt]
+  0u_2&\hspace{-0.5cm}+0u_3&\hspace{-0.5cm}+0u_4&\ldots&\hspace{-0.5cm}
+  \ldots&-\dfrac{u_{n-1}}{h^2}&\hspace{-1cm}+\dfrac{(2+ \rho h^2)u_n}{h^2}&\hspace{-0.5cm}=f_n
+\end{array}\right.
+\]
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Exemplo de aplicação - O sistema resultante}
+\begin{block}{}
+\[
+u^t=(u_2, u_3, \ldots, u_n)\quad f^t=(f_2, f_3, \ldots, f_n)
+\]
+
+Com esta notação e colocando o termo $\dfrac{1}{h^2}$ em evidência o sistema
+pode ser escrito na forma matricial, como segue
+\[
+\tiny
+\dfrac{1}{h^2}\left[
+\begin{array}{cccccc}
+  2 + \rho h^2 &-1&0&0&\ldots&0 \\
+  -1& 2+ \rho h^2&-1&0&\ldots&0 \\
+  0&-1&2+ \rho h^2&-1&\ldots&0  \\
+  \vdots &\vdots&\vdots&\vdots&\vdots&\vdots \\
+  0&0&\ldots&-1&2+ \rho h^2&-1\\
+  0&0&0&\ldots&-1&2+ \rho h^2
+\end{array}\right]
+\left[
+\begin{array}{c}
+u_2\\ u_3\\ u_4\\ \vdots\\ u_n
+\end{array}\right]=
+\left[
+\begin{array}{c}
+f_2\\ f_3\\ f_4\\ \vdots\\ f_n
+\end{array}\right]
+\]
+\normalsize
+Assim podemos escrever o sistema na forma
+\[
+  \dfrac{1}{h^2}Au=f  \Longrightarrow Au=f
+\]
+\end{block}
+\end{frame}
+
+
+\subsection{Equações Diferenciais Parciais}
+\begin{frame}{Exemplo de aplicação}
+\begin{block}{}
+Considere a seguinte formulação, bidimensional, do Problema
+do Valor de Contorno - PVC
+
+\begin{equation}\label{pvc2d}
+\left\{\hspace{-0.2cm}
+\begin{array}{l}
+  -u_{xx}-u_{yy} = f(x,y),\\
+  (x,y)\in\Omega=\{x,y\in\R\mid a<x<b, c<y<d\}.\\
+  u(x,y)=0, \forall x,y \in \partial(\Omega)
+  \end{array}
+\right.
+\end{equation}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Exemplo de aplicação - Discretização do domínio}
+\begin{block}{}
+%
+\begin{center}
+\begin{tikzpicture}[z=-1cm,thick]
+\draw[->,color=orange] (0,0,0) -- (0,0,4)node[right] {$x$};
+\draw[->,color=orange] (0,0,0) -- (5,0,0) node[right] {$y$};
+\draw[->,color=orange] (0,0,0) -- (0,2,0)node[right] {$z$};
+%%% Malha y
+%\draw[color=gray](0.5,0,0) -- (0.5,0,3);
+\draw[color=gray,dashed](1,0,0) -- (1,0,1)
+(2,1.6,1) node [below] {$y_1=c$};
+\draw(1,0,1) -- (1,0,3);
+\draw[color=gray](1.5,0,1) -- (1.5,0,3);
+\draw[color=gray](2,0,1) -- (2,0,3);
+\draw[color=gray](2.5,0,1) -- (2.5,0,3);
+\draw[color=gray](3,0,1) -- (3,0,3);
+\draw[color=gray](3.5,0,1) -- (3.5,0,3);
+\draw (4,0,1) -- (4,0,3);
+\draw[color=gray,dashed](4,0,0) -- (4,0,1)
+(5.5,1.7,1) node [below] {$y_{m+1}=d$};
+%%% Malha x
+%\draw[color=gray](0,0,0.25) -- (4,0,0.25);
+%\draw[color=gray](1,0,0.5) -- (4,0,0.5);
+%\draw[color=gray](1,0,0.75) -- (4,0,0.75);
+\draw[color=gray,dashed](1,0,1) -- (0,0,1)
+(-1,0,0.7) node [below] {$x_1=a$};
+\draw (1,0,1) -- (4,0,1);
+\draw[color=gray](1,0,1.25) -- (4,0,1.25);
+\draw[color=gray](1,0,1.5) -- (4,0,1.5);
+\draw[color=gray](1,0,1.75) -- (4,0,1.75);
+\draw[color=gray](1,0,2) -- (4,0,2);
+\draw[color=gray](1,0,2.25) -- (4,0,2.25);
+\draw[color=gray](1,0,2.5) -- (4,0,2.5);
+\draw[color=gray](1,0,2.75) -- (4,0,2.75);
+\draw(1,0,3) -- (4,0,3);
+\draw[color=gray,dashed](1,0,3) -- (0,0,3)
+(-1.3,0,2.7) node [below] {$x_{n+1}=b$};
+\end{tikzpicture}
+\end{center}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Exemplo de aplicação - O Sistema Linear}
+\begin{block}{}
+
+\begin{equation*}
+  Au=f
+\end{equation*}
+Em que {\tiny
+\[
+A = \left(
+\begin{array}{cccccc}
+  B & \gamma I & 0 &0&\ldots&0 \\
+  \gamma I& B & \gamma I &0&\ldots&0\\
+  0&\gamma I& B & \gamma I &\ldots&0\\
+  \vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+  0&0&\ldots &\gamma I& B & \gamma I\\
+  0&0&0&\ldots &\gamma I& B
+\end{array}
+\right),\quad
+B=\left[
+\begin{array}{cccccc}
+  \alpha &\beta&0&0&\ldots&0 \\
+  \beta& \alpha&\beta&0&\ldots&0 \\
+  0&\beta&\alpha&\beta&\ldots&0  \\
+  \vdots &\vdots& \vdots& \vdots& \vdots& \vdots\\
+  0&0&\ldots&\beta&\alpha&\beta\\
+  0&0&0&\ldots&\beta&\alpha
+\end{array}\right].
+\]
+\[
+\alpha= \left(\dfrac{2}{h_x^2}+\dfrac{2}{h_y^2}\right),\quad
+\beta = -\dfrac{1}{h_y^2},\quad \gamma=-\dfrac{1}{h_x^2}
+\]
+\begin{eqnarray*}
+ u^T=(u_2,u_3,\ldots,u_n) &\hbox{onde}& u_i=(u_{i,2},u_{i,3},\ldots,u_{i,m})\\
+ f^T=(f_2,f_3,\ldots,f_n) &\hbox{onde}& f_i=(f_{i,2},f_{i,3},\ldots,f_{i,m})
+\end{eqnarray*}}
+Na matriz $A$, $I$ é a matriz identidade e cada zero representa a
+matriz nula, ambas de ordem $n-1$. Em $B$ o zero é número.
+\end{block}
+\end{frame}
+
+
+
+\begin{frame}{Exemplo EDP}
+Considere o problema de transferência de calor por condução em regime permanente. \\
+
+\begin{equation}\label{EDP}
+\footnotesize{
+\left\{\begin{array}{l}
+             \dfrac{\partial^2T}{\partial x^2}+\dfrac{\partial^2T}{\partial y^2}=0,\\
+             T(x,0)=0, \,\,\, T(x,10)=0,\,\,\,  T(0,y)=0, \, T(20,y)=100.
+       \end{array}
+       \right.}
+\end{equation}
+
+
+\end{frame}
+
+\begin{frame}{Exemplo EDP}
+
+\begin{center}
+\includegraphics[scale=0.3]{placa1.jpg}
+\end{center}
+\footnotesize{Placa retangular com temperaturas definidas na fronteira do problema.}
+%Utilizando $h=5$ temos:
+
+\end{frame}
+
+\begin{frame}{Exemplo EDP}
+ Utilizando $h=5$ temos:
+$h=\dfrac{b-a}{n-1}\Longrightarrow$
+$5=\dfrac{20-0}{n-1}\Longrightarrow n = 5$
+\begin{center}
+ \includegraphics[scale=0.3]{placa2Novo.jpg}\\
+\footnotesize{Discretização do domínio com $h=5$.}
+\end{center}
+
+
+\end{frame}
+
+
+%
+%\begin{frame}{Exemplo EDP}
+%\begin{center}
+%\includegraphics[scale=0.3]{placa2Novo.jpg}
+%\end{center}
+%\footnotesize{Discretização do domínio do problema de transferência de calor em uma placa retangular.}
+%\end{frame}
+
+\begin{frame}{Exemplo EDP}
+O problema é representado da seguinte forma:
+
+\begin{equation}\label{sistplaca33}
+\left[
+\begin{array}{ccc}
+ -4 &  1  & 0 \\
+  1 & -4  & 1 \\
+  0 &  1  &-4
+\end{array}\right] \cdot
+\left[
+\begin{array}{cc}
+ T_{22}\\
+ T_{23}\\
+ T_{24}
+\end{array}\right] =
+\left[
+\begin{array}{cc}
+ 0\\
+ 0\\
+ -100
+\end{array}\right]
+\end{equation}
+
+A solução deste sistema fornece os valores: $T_{22}=1,79^o$C , $T_{23}=7,14^o$C e $T_{24}=26,79^o$C.
+
+\begin{center}
+\includegraphics[scale=0.3]{placa3.jpg}
+\end{center}
+
+
+\end{frame}
+
+%
+%\begin{frame}{Exemplo EDP}
+%\begin{center}
+%\includegraphics[scale=0.3]{placa3.jpg}
+%\end{center}
+%\footnotesize{Solução do problema de transferência de calor em uma placa retangular com $h=5$.}
+%\end{frame}
+
+
+
+\begin{frame}{Exemplo EDP}
+
+Fazendo-se $n = 7$ colunas e $m = 3$ linhas, temos:
+
+\begin{center}
+ \includegraphics[scale=0.25]{placa4Novo.jpg}
+\end{center}
+\footnotesize{Discretização do domínio do problema de transferência de calor em uma placa retangular.}
+
+\end{frame}
+
+\begin{frame}
+ \[
+\resizebox{\textwidth}{!}{$ A=
+    \left[
+     \begin{tabular}{ccccccccccccccccccccc}
+     -4 & 1 &  &  &  &  &  & 1 &  &  &  &  &  &  &  &  &  &  &  &  & \\
+      1 & -4 & 1 &  &  &  &  &  & 1 &  &  &  &  &  &  &  & & &  &  & \\
+      & 1 & -4 & 1 &  &  &  &  &  & 1 &  &  &  &  &  &  &  &  &  &  & \\
+      &  & 1 & -4 & 1 &  &  &  &  &  & 1 &  &  &  &  &  &  &  &  &  & \\
+      &  &  & 1 & -4 & 1 &  &  &  &  &  & 1 &  &  &  & &  &  & &  & \\
+      &  &  &  & 1 & -4 & 1 &  &  &  &  &  & 1 &  &  &  &  &  &  &  & \\
+      &  &  &  &  & 1 & -4 &  &  &  &  &  &  & 1 &  &  &  &  &  &  & \\
+      1 &  &  &  &  &  &  & -4 & 1 &  &  &  &  &  & 1 &  &  &  &  &  & \\
+      & 1 &  &  &  &  &  & 1 & -4 & 1 &  &  &  &  &  & 1 &  &  &  &  & \\
+      &  & 1 &  &  &  &  &  & 1 & -4 & 1 &  &  &  &  &  & 1 &  &  &  & \\
+      &  &  & 1 &  &  &  &  &  & 1 & -4 & 1 &  &  &  & &  & 1 &  &  & \\
+      &  &  &  & 1 &  &  & &  &  & 1 & -4 & 1 &  &  &  &  &  & 1 &  & \\
+      &  &  &  &  & 1 &  &  &  &  &  & 1 & -4 & 1 &  &  &  &  &  & 1 & \\
+      &  &  &  &  &  & 1 &  &  &  &  &  & 1 & -4 &  &  &  &  &  &  & 1\\
+      &  &  &  &  &  &  & 1 &  &  &  &  &  &  & -4 & 1 &  &  &  &  & \\
+      &  &  &  &  &  &  &  & 1 &  &  &  &  &  & 1 & -4 & 1 & &  &  & \\
+      &  &  &  &  &  &  &  &  & 1 &  & &  &  &  & 1 & -4 & 1 &  &  & \\
+      &  &  &  &  &  &  &  &  &  & 1 &  &  &  &  &  & 1 & -4 & 1 &  & \\
+      &  &  &  &  &  &  &  &  &  &  & 1 &  &  &  &  &  & 1 & -4 & 1 & \\
+      &  &  &  &  &  &  &  &  &  &  &  & 1 &  &  &  &  &  & 1 & -4 & 1\\
+      &  &  &  &  &  &  &  &  &  &  &  &  & 1 &  &  &  &  &  & 1 & -4
+     \end{tabular}
+     \right]$
+                         }
+\]
+\resizebox{\textwidth}{!}{
+        $T= \left(T_{22}, T_{23}, T_{24}, T_{25}, T_{26}, T_{27}, T_{28}, T_{32}, T_{33}, T_{34}, T_{35}, T_{36}, T_{37}, T_{38},
+              T_{42}, T_{43}, T_{44}, T_{45}, T_{46}, T_{47}, T_{48}
+           \right)^T$
+                         }
+     \[
+        B =\left(0, 0, 0, 0, 0, 0, -100, 0, 0, 0, 0, 0, 0, -100, 0, 0, 0, 0, 0, 0, -100\right)^T
+     \]
+\end{frame}
+
+%
+\begin{frame}{Exemplo EDP}
+\begin{center}
+\includegraphics[scale=0.5]{spyA.eps}
+
+\footnotesize{
+Estrutura da matriz $A$ os coeficientes não nulos são os pontos.}
+\end{center}
+\end{frame}
+
+%Colunas
+\begin{frame}{Exemplo EDP}
+\begin{columns}[t]
+\begin{column}{5cm}
+ \includegraphics[scale=0.3]{LaplaceResultado.eps}
+
+\footnotesize{
+Variação de temperatura na placa.}
+\end{column}
+
+\begin{column}{7cm}
+ \includegraphics[scale=0.2]{placa4NovoRESULTADO.jpg}
+
+\footnotesize{Solução do problema com 3 linhas e 7 colunas.}
+\end{column}
+\end{columns}
+\end{frame}
+
+%
+\section{Sistemas Lineares}
+
+\begin{frame}{A importância dos Sistemas Lineares}
+ \visible<2->{
+ \begin{block}{}
+  \begin{itemize}
+  \item<2-> Tanto para EDO's quanto para EDP's os Sistemas Lineares mostram-se importantes pois são
+       o posso em que se calcula as aproximações, é o que faz a conta.
+  \item<3-> Outros Métodos Numéricos (elementos finitos, volumes finitos, Newton inexato) também
+       exigem a resolução de Sistemas Lineares como um passos intermediário ou
+       como mecanismo para o cálculo da aproximação como os aqui expostos.
+  \item<4-> Há uma gama considerável de situações que são modeladas por equações ou inequações
+       lineares. Algumas delas são tão importantes que são objeto particular de estudos. Exemplo
+       disso é a Programação Linear, disciplina obrigatória na maioria dos currículos de matemática.
+  \end{itemize}
+ \end{block}}
+\end{frame}
+
+
+%\subsection{Método de Jacob}
+\begin{frame}{Método de Jacob}
+
+ \begin{block}
+
+  Carl Gustav Jacob Jacobi (1804 - 1851) foi um matemático alemão, é considerado
+um dos maiores matemáticos de sua geração. O Método de Jacobi foi apresentado em 1845.
+
+ \end{block}
+\end{frame}
+
+
+\begin{frame}{Sistemas Lineares}
+ \begin{displaymath}
+\left\{ \begin{array}{ll}
+a_{11}x_1+a_{12}x_2+...+a_{1n}x_n=b_1 \\
+a_{21}x_1+a_{22}x_2+...+a_{2n}x_n=b_2 \\
+\ \ \ .\ \ \ \ \ \ \ \ \ \ .  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\ \ \  \ \ \ \ \ \ .\\
+\ \ \ .\ \ \ \ \ \ \ \ \ \ .  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\ \ \  \ \ \ \ \ \ .\\
+\ \ \ .\ \ \ \ \ \ \ \ \ \ .  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\ \ \  \ \ \ \ \ \ .\\
+a_{n1}x_1+a_{n2}x_2+...+a_{nn}x_n=b_n \\
+\end{array} \right.
+\end{displaymath}
+\end{frame}
+
+\begin{frame}{Método de Jacob}
+Método de Jacob:
+\[x_{1}^{(1)}=\dfrac{\left(b_1-\sum\limits_{j=2}^{n} a_{1j}x_{j}^{(0)}\right)}{a_{11}}\]
+
+Repete-se o mesmo processo para $x_{2}^{(1)},...,x_{n}^{(1)}$:
+
+    \begin{center}
+        $x_{i}^{(k)}=\dfrac{\left(b_i-\sum\limits_{j=1,j \neq i}^{n}a_{ij}x_{j}^{(k-1)}\right)}{a_{ii}}$ , \ \ \  $i=1,2,...,n$.
+    \end{center}
+\end{frame}
+
+
+
+
+
+\subsection{Método de Gaus-Seidel}
+
+\begin{frame}{Seidel}
+
+\begin{block}
+
+  Phillip Ludwing von Seidel (1821-1896)
+ foi aluno e assistente de Jacobi, solucionou problemas de equações lineares que resultavam
+do trabalho de Gauss sobre mínimos quadrados.
+
+ \end{block}
+
+ O procedimento numérico de Gaus-Seidel pode ser visto como uma modificação do método de Jacobi.
+Nele atualiza-se a nova componente a partir da componente anterior.
+
+\end{frame}
+
+
+
+\begin{frame}{Método de Gaus-Seidel}
+ Método de Gaus-Seidel:
+
+\[x_{i}^{(k)}=\dfrac{\left(b_i-\sum\limits_{j=1}^{i-1}a_{ij}x_{j}^{(k)}-\sum\limits_{j=i+1}^{n}a_{ij}x_{j}^{(k-1) }\right)}{a_{ii}}, \ \ \ i=1,2,...,n\]
+
+\end{frame}
+
+
+
+\subsection{Exemplos}
+\begin{frame}
+Exemplo: Utilizando o Método de Gaus-Seidel resolva o seguinte Sistema Linear:
+ \begin{displaymath}\label{exemplo4}
+\begin{array}{ll}
+10x_1+2x_2-3x_3+2x_4=32 \\
+2x_1-15x_2+3x_3-2x_4=-59 \\
+1x_1-3x_2+20x_3+2x_4=-38 \\
+2x_1+2x_2-1x_3+30x_4=160 \\
+\end{array}
+\end{displaymath}
+\end{frame}
+
+\begin{frame}
+Efetuando os cálculos encontramos:
+
+$x^{(1)} = ( 3,2 \ \ \ ; \ \ 4,36 \ \ ; \ \ -1,41  \ \ ; \ \ 4,78 )$.\\
+$x^{(2)} = ( 0,95 \ \ ; \ \ 3,14 \ \ ; \ \ -1,95 \ \ ;  \ \ 5,00 )$. \\
+$x^{(3)} = ( 0,99 \ \ ; \ \ 3,01 \ \ ; \ \ -2,00 \ \ ;  \ \ 5,00 )$. \\
+$x^{(4)} = ( 1,00 \ \ ; \ \ 3,00 \ \ ; \ \ -2,00 \ \ ;  \ \ 5,00 )$. \\
+$x^{(5)} = ( 1,00 \ \ ; \ \ 3,00 \ \ ; \ \ -2,00 \ \ ;  \ \ 5,00 )$. \\
+\end{frame}
+
+%\begin{frame}
+% MATLAB SOLUÇÃO
+%\end{frame}
+
+%\begin{frame}
+%Exemplo: Matriz sem dominância diagonal - MATLAB SOLUÇÃO
+%\[\underbrace{\left[
+%\begin{array}{ccc}
+%  3 &  -2 & 2 \\
+%  1 &  1  & 1 \\
+%  2 &  1  & 1
+%\end{array}\right]}_{A}\cdot
+%\underbrace{\left[
+%\begin{array}{c}
+%x_1\\
+%x_2\\
+%x_3
+%\end{array}
+%\right]}_{x}=
+%\underbrace{\left[
+%\begin{array}{c}
+%-3\\
+%-4\\
+%-3
+%\end{array}\right]}_{B}\]
+%
+%$A$ não é diagonal dominante pois $3$ não é maior que $|-2|+|2|$.
+%\end{frame}
+
+
+\begin{frame}{Outros métodos para resolver Sistemas Lineares}
+ \begin{itemize}
+  \item Fatoração LU;
+  \item Decomposição de Cholesky;
+  \item Decomposição QR;
+  \item Decomposição SVD;
+  \item Métodos Gradientes Conjugados;
+  \item Método Multi-Grid.
+ \end{itemize}
+
+\end{frame}
+
+%\begin{frame}
+%Fatoração LU
+%\[\underbrace {A}_{LU}x=b \Rightarrow L\underbrace {Ux}_{y}=b \Rightarrow Ux=y  \]
+%
+%
+%Fatoração QR
+%\[Ax=b \Rightarrow QRx=b \Rightarrow Rx=Q^Tb\]
+%
+%\end{frame}
+
+
+\section{Considerações finais}
+ \begin{frame}{Considerações finais}
+ \begin{block}{Considerações}
+\begin{itemize}
+\item Os Métodos Numéricos em geral são ferramentas simples e podem ser aplicados
+   convenientemente nos diversos níveis de ensino, com baixa complexidade e resultados
+   formidáveis a baixo custo.
+\item Cada método resolve melhor um determinado tipo de problema, não há um método
+   robusto que adeque-se bem a todos os problemas.
+\item Métodos Numéricos também podem ser sofisticados e complicados.
+\end{itemize}
+\end{block}
+ \end{frame}
+
+
+
+\begin{frame}{Enfim, está quase acabando, só faltam as suas perguntas}
+\begin{block}{}
+  \begin{center}
+  {\caligrafica Obrigada}
+  \end{center}
+\end{block}
+\end{frame}
+
+%%%\section{Referências}
+%%%\begin{frame}{Referências Bibliográficas}
+%%% \begin{thebibliography}{99}
+%%%\tiny{
+%%%\bibitem {Filho} {\sc{Filho}}, Frederico Ferreira Campos. \emph{Algoritmos Numéricos}, 2º Edição. Editora LTC.
+%%%\bibitem{Cunha} Maria Cristina C. Cunha.  \emph{Métodos Numéricos}, 2º Edição, 2000.  Editora Unicamp.
+%%%\bibitem{Ruggiero} Ruggiero, Márcia A. Gomes. \emph{Cálculo Numérico: aspectos teóricos e computacionais}, 1988. Editora McGraw-Hill.
+%%%\bibitem{Burden} Richard L. Burden e J. Douglas Faires. \emph{Análise Numérica}, 8º Edição, 2008. Editora Cengage Learning.
+%%%\bibitem{Poole} David Poole. \emph{Álgebra Linear}, 2003, Cengage Learning.
+%%%\bibitem{Franco} Neide Bertoldi Franco. \emph{Cálculo Numérico}, 2º Reimpressão, 2009. Editora Personal Education.
+%%%\bibitem{Mathews} John H. Mathews. \emph{ Numerical \ \ Methods \ \ for \ \ Mathematics, Science, and  Engineering}, 2º Edição, 1992. Prentice-Hall International.
+%%%\bibitem{Demmel} James W. Demmel. \emph{Applied Numerical Linear Algebra}, 1997. Siam.
+%%%\bibitem{mathworks}\href{http://www.mathworks.com/matlabcentral/fileexchange/2181-numerical-methods-using-matlab-2e/content/edition2/matlab/chap_3/gseid.m} {http://www.mathworks.com/matlabcentral/fileexchange/2181-numerical-methods-using-matlab-2e/content/edition2/matlab/chap3/gseid.m}  Acesso em: 18 de set. 2013.
+%%%\bibitem{Trottenberg}    Trottenberg, Ulrich e Oosterlee, Cornelis W. e Schüller, Anton. \emph{Multigrid}, 2001. Academic Press.
+%%%\bibitem{Elon} Lima, Elon Lages. \emph{A Equação do Terceiro Grau}, \ \ Matemática Universitária, n. 5 , Junho de 1987, p. 9-23.
+%%%}
+%%%\end{thebibliography}
+%%%\end{frame}
+
+
+
+\end{document} 

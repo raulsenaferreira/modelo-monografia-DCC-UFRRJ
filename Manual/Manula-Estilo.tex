@@ -1,0 +1,162 @@
+\documentclass[mistura,moleza,comandos,links]{Estilo}
+%%% Alem das opções da classe report existem as opções:
+%%% licenciatura ---> Padrão: Monografia de licenciatura
+%%% bacharel     ---> Monografia de bacharelado
+%%% especialista ---> Monografia de especialização
+%%% mestre       ---> Dissertação de mestrado
+%%% doutor       ---> Tese de doutorado
+%%%%\renewcommand{\fontecab}{\color{cyan}\normalfont\normalsize\sffamily}
+%%% altera a fonte do conteúdo do cabeçalho
+%%%\usepackage[Conny]{fncychap}
+%%%
+\usepackage[Bjornstrup]{fncychap}
+\ChNameVar{\centering\Huge\sffamily\bfseries}
+%%% Formata o caput do capítulo.
+\ChTitleVar{\centering\Huge\sffamily\bfseries}
+%%% Formata o título do capítulo.
+%%%makeindex -s makeglo.ist -o document.gls document.glo
+\usepackage{relsize}
+\newcommand{\bbb}[1]{\sffamily{#1}}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\estilo}{\texttt{Estilo}}
+\newcommand{\estiloc}{\texttt{Estilo.cls}}
+\newcommand{\exemplo}{{\sc\noindent Exemplo:\vspace{-0.3cm}}}
+
+\definecolor{estilo}{rgb}{1.00,0.42,0.14}
+\definecolor{capa}{rgb}{1.00,0.50,0.25}
+\definecolor{maz}{rgb}{0.00,0.50,0.20}
+
+\newcommand{\verde}[1]{\textcolor[rgb]{0.00,0.62,0.00}{#1}}%%% Cor do \usepackage
+\newcommand{\azul}[1]{\color{blue}{#1}}%%% Cor do pacote
+
+\newcommand{\maz}[1]{\textcolor[rgb]{0.00,0.50,0.20}{#1}}
+\newcommand{\paco}[1]{\textsf{#1}}
+\newcommand{\pacote}[1]{\paco{#1}%
+\index{Pacotes@\protect Pacotes!#1@\protect\paco{#1}}%
+\index{#1@\protect\paco{#1}}}
+\newcommand{\upaco}[1]{\texttt{\verde{\symbol{'134}usepackage}}%
+\textsf{\azul{\{#1\}}}}
+\newcommand{\upacoo}[2]{\texttt{\verde{\symbol{'134}usepackage}}%
+\textsf{\azul{[#1]\{#2\}}}}
+
+\newcommand{\coma}[1]{\texttt{\textbackslash#1}}
+\newcommand{\comando}[1]{\coma{#1}%
+\index{Comandos!"#1@\protect\coma{"#1}}%
+\index{"#1@\protect\coma{"#1}}}
+
+\newcommand{\ambi}[1]{\textsf{#1}}
+\newcommand{\ambiente}[1]{\ambi{#1}%
+\index{Ambientes@\protect Ambientes!#1@\protect\ambi{#1}}%
+\index{#1@\protect\ambi{#1}}}
+%%%
+\newcommand{\op}[1]{\textbf{\emph{#1}}}
+\newenvironment{VV}{%
+\VerbatimEnvironment
+\begin{Verbatim}[fontfamily=courier]}
+{\end{Verbatim}}
+
+%%% O mesmo que o ambiente VV, só o tamanho da letra diminuiu um pouco
+\newenvironment{VVV}{%
+\VerbatimEnvironment
+\begin{Verbatim}[fontfamily=courier,fontsize=\small]}
+{\end{Verbatim}}
+
+%%% Exige a opção links
+\hypersetup{%%%
+   linkcolor=estilo, %%% Controle da cor dos links e do Sumário, o
+%                    %%% \tableofcontents, \ref, \footnote, etc.
+%                    %%% Pode-se forçar que determinado link tenha
+%                    %%% uma cor específica com os comandos locais
+%                    %%% tipo \textcolor{cor do link}{link}
+   urlcolor=blue,    %%% cor do \url e \href.
+   linktocpage=true, %%% Põe link no número da página no sumário
+                     %%% e na lista de tabelas e gráficos
+   pdfpagemode={FullScreen}
+   }              %%% Tela cheia. É diferente de
+
+\orientador{Benaia Sobreira de Jesus Lima}
+\newenvironment{nota}{ {\bf \verde{Nota:}}}{\vspace{.1in}\hspace{-0.1cm}\verde{$\blacklozenge$}}
+\begin{document}
+%\capa
+%\rosto
+%%%============================   Capa   =================================
+\thispagestyle{empty}
+\vspace*{7cm}
+
+\begin{center}
+{\huge\textcolor{capa}{\textsc{Classe Estilo}}}\vspace*{-0.75cm}
+\noindent\rule{\textwidth}{1pt}
+\LARGE{\sffamily Para confecção de trabalhos acadêmicos em
+  \LaTeX{} segundo as normas do DTL }
+\noindent\rule{\textwidth}{1pt}
+
+\hspace*{-0.5cm}\caligrafica{Benaia Sobreira de Jesus Lima}
+\end{center}
+%\url{http://www.bax.com.br/supervision/norma_abnt}
+\vspace{8.5cm}
+
+
+\begin{center}
+\textsc{\smaller \textcolor{capa}{Versão 1}}
+\end{center}
+%%%============================   Capa   =================================
+\newpage
+
+
+
+\thispagestyle{empty}
+\vspace*{5cm}
+\epigrafe{Para os pais, filho é inteligente, bonito e santo.}{Benaia Sobreira}
+\epigrafe{Ninguém é tão inteligente quanto acha que é, e as pessoas
+não são tão burras quanto se pensa que são.}{Benaia Sobreira}
+
+\begin{dedico}
+
+A minha dama, grande amiga e companheira, amor e confidente, que
+me deu amor verdadeiro, carinho, colo, um herdeiro, uma segunda
+família, belos sorrisos, creu e descobriu como temperar minha
+estranha calma incontida.\\
+
+\hfill Disse Deus - Só o amor vencerá.
+\end{dedico}
+
+\begin{agradece}
+A Deus - Santo e generoso, puro e longânimo.
+\end{agradece}
+
+\begin{resumo}
+Este trabalho discute aquisição, instalação e, sobretudo, o uso da
+classe \estilo{} para construir trabalhos acadêmicos/científicos.
+Sua configuração padrão atende as normas do Departamento de
+Tecnologias e Linguagens - DTL. Mas ela pode ser facilmente ajustada
+para adequar-se a outras exigências.
+
+\palavras{\TeX, \LaTeX, Padronização, Beleza, Tipografia, Coesão e
+Simplicidade}
+\end{resumo}
+
+\begin{resumoE}
+This paper discusses acquisition, installation and especially
+the use of Class \estilo{} for building academic/scientific.
+Its default configuration meets the standards of the Department of
+Technologies and Languages - DTL. But it can be easily adjusted
+to adapt to other requirements.
+
+\palavrasE{\TeX, \LaTeX, Standardization, Beauty, Typography,
+Cohesion and Simplicity}
+\end{resumoE}
+
+%%%\the\textwidth
+
+\tableofcontents %%% Sumário
+\listoffigures   %%% Lista de figuras
+\listoftables    %%% Lista de tabelas
+%%%\addtolength{\textwidth}{3cm}%%%
+
+\ajuste          %%% Necessário para arrumar a numeração
+%\onehalfspacing
+\input{Parte1}
+\input{Parte2}
+\input{Parte3}
+
+\end{document}

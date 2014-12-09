@@ -1,0 +1,575 @@
+%%%\documentclass[Esimples,enplinha,moleza]{Estilo}
+%%%%%% Alem das opções da classe report existem as opções:
+%%%%%% licenciatura ---> Padrão: Monografia de licenciatura
+%%%%%% bacharel     ---> Monografia de bacharelado
+%%%%%% especialista ---> Monografia de especialização
+%%%%%% mestre       ---> Dissertação de mestrado
+%%%%%% doutor       ---> Tese de doutorado
+%%%\usepackage{showexpl}
+%%%\usepackage[Bjornstrup]{fncychap}
+%%%\ChNameVar{\centering\Huge\sffamily\bfseries} %%% Formata o caput do capítulo.
+%%%\ChTitleVar{\centering\Huge\sffamily\bfseries}%%% Formata o título do capítulo.
+%%%%\usepackage[brazil]{babel}
+%%%%\usepackage[latin1]{inputenc}
+%%%\usepackage{relsize}
+%%%\newcommand{\bbb}[1]{\textbf{\sffamily{#1}}}
+%%%\newcommand{\ttt}[1]{\texttt{#1}}
+%%%\newcommand{\estilo}{\texttt{Estilo}}
+%%%\newcommand{\estiloc}{\texttt{Estilo.cls}}
+%%%\newcommand{\exemplo}{{\sc\noindent Exemplo:\vspace{-0.3cm}}}
+%%%
+%%%\definecolor{estilo}{rgb}{1.00,0.42,0.14}
+%%%\definecolor{maz}{rgb}{0.00,0.50,0.20}
+%%%\newcommand{\verde}[1]{\textcolor[rgb]{0.00,0.62,0.00}{#1}} %%% Cor do \usepackage
+%%%\newcommand{\azul}[1]{\textcolor{blue}{#1}} %%% Cor do pacote
+%%%
+%%%\newcommand{\maz}[1]{\textcolor[rgb]{0.00,0.50,0.20}{#1}}
+%%%\newcommand{\paco}[1]{\textsf{#1}}
+%%%\newcommand{\pacote}[1]{\paco{#1}%
+%%%\index{Pacotes@\protect Pacotes!#1@\protect\paco{#1}}%
+%%%\index{#1@\protect\paco{#1}}}
+%%%\newcommand{\upaco}[1]{\texttt{\verde{\symbol{'134}usepackage}}%
+%%%\textsf{\azul{\{#1\}}}}
+%%%\newcommand{\upacoo}[2]{\texttt{\verde{\symbol{'134}usepackage}}%
+%%%\textsf{\azul{[#1]\{#2\}}}}
+%%%
+%%%\newcommand{\coma}[1]{\texttt{\textbackslash#1}}
+%%%\newcommand{\comando}[1]{\coma{#1}%
+%%%\index{Comandos!"#1@\protect\coma{"#1}}%
+%%%\index{"#1@\protect\coma{"#1}}}
+%%%
+%%%\newcommand{\ambi}[1]{\textsf{#1}}
+%%%\newcommand{\ambiente}[1]{\ambi{#1}%
+%%%\index{Ambientes@\protect Ambientes!#1@\protect\ambi{#1}}%
+%%%\index{#1@\protect\ambi{#1}}}
+%%%%%%===========================================================================
+%%%%%%                 Controlam cor das seções e subseções                  %===
+%%%%%%===========================================================================
+%%%\renewcommand{\fontesec}{\color{estilo}\Large\sffamily\bfseries}
+%%%\renewcommand{\fontesubsec}{\color{estilo}\large\sffamily\bfseries}
+%%%
+%%%
+%%%\newenvironment{VV}{%
+%%%\VerbatimEnvironment
+%%%\begin{Verbatim}[fontfamily=courier]}
+%%%{\end{Verbatim}}
+%%%
+%%%\newenvironment{VVV}{%
+%%%\VerbatimEnvironment
+%%%\begin{Verbatim}[fontfamily=courier,fontsize=\small]}
+%%%{\end{Verbatim}}
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%\makeatletter
+%%%\def\abaixo{%
+%%%	\@ifnextchar[{\@underbracket}{\@underbracket [\@bracketheight]}%
+%%%}
+%%%\def\@underbracket[#1]{%
+%%%	\@ifnextchar[{\@under@bracket[#1]}{\@under@bracket[#1][0.4em]}%
+%%%}
+%%%\def\@under@bracket[#1][#2]#3{%\message {Underbracket: #1,#2,#3}
+%%%	\mathop{\vtop{\m@th \ialign {##\crcr $\hfil \displaystyle {#3}\hfil $%
+%%%	\crcr \noalign {\kern 3\p@ \nointerlineskip }\upbracketfill {#1}{#2}
+%%%     \crcr \noalign {\kern 3\p@ }}}}\limits}
+%%%\def\upbracketfill#1#2{$\m@th \setbox \z@ \hbox {$\braceld$}
+%%%                  \edef\@bracketheight{\the\ht\z@}\bracketend{#1}{#2}
+%%%                  \leaders \vrule \@height #1 \@depth \z@ \hfill
+%%%                  \leaders \vrule \@height #1 \@depth \z@ \hfill \bracketend{#1}{#2}$}
+%%%\def\bracketend#1#2{\vrule height #2 width #1\relax}
+%%%\def\acima{\@ifnextchar[{\@overbracket}{\@overbracket[\@bracketheight]}}
+%%%\def\@overbracket[#1]{\@ifnextchar[{\@over@bracket[#1]}{\@over@bracket[#1][0.3em]}}
+%%%\def\@over@bracket[#1][#2]#3{%\message {Overbracket: #1,#2,#3}
+%%%   \mathop {\vbox {\m@th \ialign {##\crcr \noalign {\kern 3\p@
+%%%   \nointerlineskip }\downbracketfill {#1}{#2}
+%%%        \crcr \noalign {\kern 3\p@ }
+%%%        \crcr  $\hfil \displaystyle {#3}\hfil $%
+%%%        \crcr} }}\limits}
+%%%\def\downbracketfill#1#2{$\m@th \setbox \z@ \hbox {$\braceld$}
+%%%    \edef\@bracketheight{\the\ht\z@}\downbracketend{#1}{#2}
+%%%    \leaders \vrule \@height #1 \@depth \z@ \hfill
+%%%    \leaders \vrule \@height #1 \@depth \z@ \hfill
+%%%\downbracketend{#1}{#2}$}
+%%%\def\downbracketend#1#2{\vrule depth #2 width #1\relax}
+%%%\makeatother
+%%%\begin{document}
+%%
+\chapter{Facilidades para Matemática}\label{comandos}
+
+Ao redigir um trabalho, algumas tarefas consagram-se
+corriqueiras. Neste caso, é conveniente definir um comando
+para executá-las. A classe \estilo{} buscou atender as formas
+mais básicas dessa demanda definindo ou redefinindo comandos,
+os quais, serão apresentados neste capítulo.
+
+\section{Conjuntos Numéricos}
+
+Com mais ou menos intensidade, os conjuntos numéricos estão
+presentes em qualquer texto matemático e, não raro, o emprego
+de notação é mais apropriado e até imperativo. Assim, a classe
+\estilo{} definiu comandos para inserir a notação dos principais
+conjuntos numéricos.
+
+Todos os comandos da tabela~\ref{comandosMat} foram definidos na
+classe \estilo{} e exigem o pacote \pacote{amsfonts} da
+\emph{American Mathematical Society - AMS}.
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|c|l|l|c|}
+    \hline
+    Comando & Conjunto que representa & Uso & Efeito \\ \hline
+    \comando{C} & Conjunto dos números Complexos   &
+    \verb|$\C$| & $\C$\\ \hline
+    \comando{I} & Conjunto dos números Irracionais &
+    \verb|$\I$| & $\I$ \\ \hline
+    \comando{N} & Conjunto dos números Naturais    &
+    \verb|$\N$| & $\N$ \\ \hline
+    \comando{P} & Conjunto dos números Primos      &
+    \verb|$\P$| & $\P$ \\ \hline
+    \comando{Q} & Conjunto dos números Racionais   &
+    \verb|$\Q$| & $\Q$ \\ \hline
+    \comando{R} & Conjunto dos números Reais       &
+    \verb|$\R$| & $\R$ \\ \hline
+    \comando{Z} & Conjunto dos números Inteiros    &
+    \verb|$\Z$| & $\Z$ \\ \hline
+    \hline
+  \end{tabular}
+  \caption{Comandos para Conjuntos Numéricos}\label{comandosMat}
+\end{table}
+
+O código
+\begin{VV}
+Se $x\in\I$ então $x\notin\N,\,\,x\notin\P,\,\,x\notin\Z$
+e $x\notin\Q$ mas $x\in\R$.
+\end{VV}
+depois de compilado produz.
+
+Se $x\in\I$ então $x\notin\N,\,\,x\notin\P,\,\,x\notin\Z$ e
+$x\notin\Q$ mas $x\in\R$.
+
+\section{Comandos para Funções}
+
+Algumas funções são realmente importantes e utilitárias, parecem
+até consórcio, quando você mesmo espera é contemplado. Os comandos
+da tabela~\ref{funcMat} definem notação para algumas funções,
+aprecie sem moderação e, se possível, sugira outras.
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|c|l|l|c|}
+    \hline
+    Comando & Função & Uso & Efeito \\ \hline
+    \comando{sen} & Função seno & \verb|$\sen{x}$| &
+    $\sen{x}$\\ \hline
+    \comando{Cos} & Função seno & \verb|$\Cos{x}$| &
+    $\Cos{x}$\\ \hline
+    \comando{tg} & Função tangente & \verb|$\tg{x}$| &
+    $\tg{x}$ \\ \hline
+    \comando{F} & Transformada de Fourier & \verb|$\F{f(x)}$| &
+    $\F{f(x)}$ \\ \hline
+    \comando{La} & Transformada de Laplace & \verb|$\La{f(t)}$| &
+    $\La{f(t)}$ \\ \hline
+    \comando{div} & Operador Divergente & \verb|$\div{F}$| &
+    $\div{F}$ \\ \hline
+    \comando{rot} & Operador Rotacional & \verb|$\rot{F}$| &
+    $\rot{F}$ \\ \hline
+    \comando{comp} & Composta de duas funções & \verb|$\comp{f}{g}$| &
+    $\comp{f}{g}$\\ \hline
+  \end{tabular}
+  \caption{Comandos para Funções Usuais}\label{funcMat}
+\end{table}
+
+Em alternativa aos comandos do \LaTeX{} \comando{sin}, \comando{cos} e
+\comando{tan} foram definidos os comandos \comando{sen}, \comando{Cos}
+e \comando{tg}. Eles possuem um parâmetro opcional para construir
+potências e seu argumento fica entre parênteses que se ajustam
+automaticamente ao tamanho da fórmula.
+
+\begin{VV}
+   \sen[Op]{arg.}    \Cos[Op]{arg.}    \tg[Op]{arg.}
+\end{VV}
+
+Se o parâmetro opcional não for declarado a classe entende que é
+vazio, ou seja, sem potência.
+
+O código
+\begin{VV}
+\[\sen{\dfrac{2\pi x}{5}} + \tg[3]{\dfrac{2\pi x}{5}} +
+\Cos[2]{\dfrac{2\pi x}{5}} \neq{1}\]
+\end{VV}
+depois de compilado produz
+
+\[\sen{\dfrac{2\pi x}{5}} + \tg[3]{\dfrac{2\pi x}{5}} +
+\Cos[2]{\dfrac{2\pi x}{5}} \neq{1}\]
+
+OBS: Se você gostou desses comandos e deseja aplicar esses efeitos
+a um arquivo construído com \coma{sin}, \coma{cos} e \coma{tan}
+pode usar as definições:
+
+\begin{VVV}
+\renewcommand{\sin}[2][]{\mbox{sin}^{_{#1}}\left(#2\right)}
+\renewcommand{\cos}[2][]{\mbox{cos}^{_{#1}}\left(#2\right)}
+\renewcommand{\tan}[2][]{\mbox{tan}^{_{#1}}\left(#2\right)}
+\end{VVV}
+no preâmbulo de seu arquivo \ttt{.tex} que fará efeito. Porém, essa
+solução não se aplica a uma classe, daí o autor achou mais cômodo
+definir novos comandos.
+
+Os comandos \coma{La} e \coma{F}, para as transformadas de Laplace
+e Fourier respectivamente, exigem o pacote \pacote{mathrsfs}.
+
+O código
+\begin{VV}
+A transformadas de Laplace está assim definida.
+\[\La{f(t)} = F(s) = \int_{0}^{+\infty}e^{-st}f(t)\,dt\]
+
+Enquanto a transformada de Fourier é definida por
+\[ \F{g(x)} = F(k) = \dfrac{1}{\sqrt{2\pi}}\int_{
+-\infty}^{+\infty} g(x)e^{ikx}\,dx \]
+\end{VV}
+depois de compilado gera.
+
+A transformadas de Laplace está assim definida.
+\[
+\La{f(t)} = F(s) = \int_{0}^{+\infty}e^{-st}f(t)\,dt
+\]
+
+Enquanto a transformada de Fourier é definida por
+\[
+\F{g(x)} = F(k) = \dfrac{1}{\sqrt{2\pi}}\int_{-\infty}^{+\infty}
+g(x)e^{ikx}\,dx
+\]
+
+O código a seguir exemplifica o uso dos comandos \coma{div} e
+\coma{rot}.
+\begin{VV}
+Se $F(x,y,z)=-(x,y,z)$, então $\div{F}=-3$ e $\rot{F}=0$.
+\end{VV}
+
+Se $F(x,y,z)=-(x,y,z)$, então $\div{F}=-3$ e $\rot{F}=0$.
+
+O comando \coma{comp} pode ser útil a quem vai usar composição
+de funções. Ele implementa a notação da composição de aplicações
+corretamente.
+
+O código \verb|\comp{f}{g}(x)\sob{=} f(g(x))| produz
+\[
+\comp{f}{g}(x) \sob{=} f(g(x))
+\]
+
+\subsection{A função Maior Inteiro}
+
+A função que a cada $x\in\R$ associa o maior inteiro menor que
+$x$ denomina-se \emph{função maior inteiro} e temos:
+\[
+f(x)=\mint{x}
+\]
+
+O símbolo da função maior inteiro foi definido na classe \estilo{}
+através do comando \comando{mint}.
+
+\verb|f(x)=\mint{x}| depois de compilado produz $f(x)=\mint{x}$.
+
+\section{Números Naturais}
+
+Os conceitos de Mínimo Múltiplo Comum - mmc e Máximo Divisor
+Comum - mdc são utilitários a quem lida com teoria dos números.
+A classe \estilo{} oferece um comando para cada um deles:
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|c|l|l|c|}
+    \hline
+    \comando{mmc} & Mínimo Múltiplo Comum& \verb|$\mmc{a,b}$| &
+    $\mmc{a,b}$ \\ \hline
+    \comando{mdc} & Máximo Divisor comum & \verb|$\mdc{a,b}$| &
+    $\mdc{a,b}$ \\ \hline
+    \hline
+  \end{tabular}
+  \caption{MMC e MDC}\label{mmm}
+\end{table}
+
+\section{Unidades}
+
+De fato, é possível e até não tão penoso inserir unidades
+físicas diretamente. Porém essa forma de inserção pode
+introduzir espaços extras e via de regra usa a fonte do
+modo matemático (itálico).
+
+Se estes resultados não atenderem ao refinado gosto do
+leitor o comando \comando{unidade} certamente virá a calhar,
+ele usa fonte \ttt{roman} (definida pelo \comando{mathrm}) e
+ajusta corretamente o espaço entre o número e a unidade. Ele
+funciona dentro e fora do modo matemático.\\
+
+O código\,\, \verb|$\unidade{108}{m/s}$| \,\, produz \,\,
+$\unidade{108}{m/s}$.\\
+
+O código\,\, \verb|\unidade{3}{N/m^2}| \,\, produz \,\,
+$\unidade{3}{N/m^2}$.
+Da mesma forma foi definido o comando \comando{grau} para
+inserir a notação (bolinha) do grau.
+\[
+    \verb|$30\grau$|\quad  30\grau
+\]
+
+\section{Álgebra Linear}
+
+Algumas ações são corriqueiras na Álgebra Linear ou Geometria
+Analítica, resolvi criar alguns comandos para essas tarefas.
+
+\subsection{Criar um Vetor}
+
+O comando \comando{vetor} cria um vetor com $n-$coordenadas.
+Ele admite dois parâmetros, um obrigatório - para atribuir
+nome ao vetor (uma letra minúscula) e um opcional - para
+especificar o número de coordenadas, cujo valor padrão é $n$.
+\begin{VV}
+\vetor[Número de coordenadas]{nome do vetor (letra)}
+\end{VV}
+
+\exemplo\\
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|l|}
+    \hline
+    Comando & Uso & Efeito \\ \hline
+    \coma{vetor} & \verb|$\vetor{u}$| & $\vetor{u}$ \\ \hline
+    \coma{vetor} & \verb|$\vetor[7]{u}$| & $\vetor[7]{u}$ \\ \hline
+    \coma{vetors} & \verb|$\vetors{u}$| & $\vetors{u}$ \\ \hline
+    \coma{vetors} & \verb|$\vetors[13]{u}$| & $\vetors[13]{u}$ \\ \hline
+    \hline
+  \end{tabular}
+  \caption{Comandos para Vetor}\label{vetor}
+\end{table}
+
+Note o comando \comando{vetors}, a única diferença dele para o
+\coma{vetor} é a seta sobre a letra que identifica o vetor.
+
+\subsection{Base}
+
+O comando \comando{base} descreve os vetores de uma base, ele
+é idêntico ao \coma{vetor}.
+
+Observe os fragmentos e o resultado produzido
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|l|l|l|}
+    \hline
+    Comando & Uso & Efeito \\ \hline
+    \comando{base} & \verb|$\base{b}$| & $\base{b}$ \\ \hline
+    \comando{base} & \verb|$\base[k]{b}$| & $\base[k]{b}$ \\ \hline
+    \comando{base} & \verb|$\base[m]{u}$| & $\base[m]{u}$ \\ \hline
+  \end{tabular}
+  \caption{Base}
+\end{table}
+
+\subsection{Produto Interno}
+
+O comando \comando{inter} introduz a notação do produto interno de
+dois vetores.
+
+\begin{VV}
+          \inter{primeiro vetor}{segundo vetor}
+\end{VV}
+
+O fragmento
+\begin{VV}
+    \[\inter{x + y}{z} = \inter{x}{z} + \inter{y}{z}\]
+\end{VV}
+depois de compilado produz
+\[
+  \inter{x + y}{z} = \inter{x}{z} + \inter{y}{z}.
+\]
+
+\subsection{Norma}
+
+O comando \comando{nor} introduz a notação de norma de
+vetor. Havendo necessidade, o tipo de norma pode ser especificada
+utilizando o parâmetro opcional, o qual, por omissão, é vazio.
+
+\begin{VV}
+                  \nor[tipo de norma]{vetor}
+\end{VV}
+
+O fragmento
+\begin{VV}
+    \[\nor[\infty]{x} \leq \nor[2]{x} \leq \nor[1]{x}\]
+\end{VV}
+depois de compilado produz
+\[
+\nor[\infty]{x} \leq \nor[2]{x} \leq \nor[1]{x}
+\]
+
+Enquanto \verb|\[ \nor{x+y} \leq \nor{x} + \nor{y} \]| produz
+\[ \nor{x+y} \leq \nor{x} + \nor{y} \]
+
+\section{Genéricos}
+
+\subsection{Empilhando Símbolos}
+
+O comando \comando{sob} literalmente empilha coisas. Ele possui um
+parâmetro opcional - cujo valor padrão é \ttt{def.} e um parâmetro
+obrigatório. O argumento opcional é posto sobre o obrigatório.
+
+Não é preciso modo matemático, veja: \verb!\sob{=}! produz
+\sob{=}. Mas ele também funciona em ambientes matemáticos.
+\begin{VV}
+\[f'(x) \sob{=} \lim_{h \to 0} \dfrac{f(x+h) - f(x)}{h}\]
+\end{VV}
+\[
+f'(x) \sob{=} \lim_{h \to 0} \dfrac{f(x+h) - f(x)}{h}
+\]
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|}
+    \hline
+    \verb!\sob[f]{\longrightarrow}! & \sob[f]{\longrightarrow} \\ \hline
+    \verb!A\sob[f]{\longrightarrow}B! &A\sob[f]{\longrightarrow}B \\ \hline
+    \verb!\sob[f]{A \longrightarrow B}! &\sob[f]{A \longrightarrow B}\\ \hline
+  \end{tabular}
+  \caption{Empilhando coisas}\label{empilha}
+\end{table}
+
+A terceira linha da tabela~\ref{empilha} é um exemplo de como não usar
+o comando \coma{sob}, veja que o resultado é péssimo.
+
+\subsection{Marcadores}
+
+O código que define os comandos \comando{acima} e \comando{abaixo}
+foi retirado da página $41$ do \textbf{Math mode - v.2.33}, de
+autoria de {\sf Herbert Voß}. A classe \estilo{} apenas alterou o
+nome dos comandos ali definidos.\\
+
+O código\,\,\verb|\acima{\mbox{E agora José?}}| \,produz\,\,
+$\acima{\mbox{E agora José?}}$ \\
+
+O código\,\, \verb|\abaixo{\mbox{E agora José?}}|\, produz \,\,
+$\abaixo{\mbox{E agora José?}}$
+
+A construção
+\[ \abaixo{X\sob[f]{\longrightarrow} Y
+\sob[g]{\longrightarrow} Z} \]
+foi obtida com o fragmento
+\begin{VV}
+\[ \abaixo{X\sob[f]{\longrightarrow} Y
+\sob[g]{\longrightarrow} Z} \]
+\end{VV}
+
+A construção
+\[ \acima{X\sob[f]{\longrightarrow} Y
+\sob[g]{\longrightarrow} Z} \]
+foi obtida com o fragmento
+\begin{VV}
+\[ \acima{X\sob[f]{\longrightarrow} Y
+\sob[g]{\longrightarrow} Z} \]
+\end{VV}
+
+Esses comandos admitem dois parâmetros opcionais, o primeiro
+controla a espessura da linha, o segundo controla a profundidade
+do recuo do marcador. Observe os exemplos do \ttt{Math Mode} (com
+leves alterações).
+\begin{eqnarray*}
+\textrm{Um grafo}& \acima[0.1pt]{1\rightarrow2
+\rightarrow3\rightarrow4}
+\acima[0.5pt][0.75em]{\rightarrow5\rightarrow6
+\rightarrow7}
+\acima[2pt][2em]{\rightarrow8\rightarrow9
+\rightarrow10} & \textrm{Acabou}\\
+& \textrm{pequeno}\hspace{1.5cm}\textrm{médio}
+\hspace{1.5cm} \textrm{grande}
+ \end{eqnarray*}
+\begin{VV}
+\begin{eqnarray*}
+\textrm{Um grafo}& \acima[0.1pt]{1\rightarrow2
+\rightarrow3\rightarrow4}
+\acima[0.5pt][0.75em]{\rightarrow5\rightarrow6
+\rightarrow7}
+\acima[2pt][2em]{\rightarrow8\rightarrow9
+\rightarrow10} & \textrm{Acabou}\\
+& \textrm{pequeno}\hspace{1.5cm}\textrm{médio}
+\hspace{1.5cm} \textrm{grande}
+ \end{eqnarray*}
+\end{VV}
+
+\begin{eqnarray*}
+\textrm{Um grafo}& \abaixo[0.1pt]{1\rightarrow2
+\rightarrow3\rightarrow4}
+\abaixo[0.5pt][0.75em]{\rightarrow5\rightarrow6
+\rightarrow7}
+\abaixo[2pt][2em]{\rightarrow8\rightarrow9
+\rightarrow10} & \textrm{Acabou}\\
+& \textrm{pequeno}\hspace{1.5cm}\textrm{médio}
+\hspace{1.5cm} \textrm{grande}
+ \end{eqnarray*}
+\begin{VV}
+\begin{eqnarray*}
+\textrm{Um grafo}& \abaixo[0.1pt]{1\rightarrow2
+\rightarrow3\rightarrow4}
+\abaixo[0.5pt][0.75em]{\rightarrow5\rightarrow6
+\rightarrow7}
+\abaixo[2pt][2em]{\rightarrow8\rightarrow9
+\rightarrow10} & \textrm{Acabou}\\
+& \textrm{pequeno}\hspace{1.5cm}\textrm{médio}
+\hspace{1.5cm} \textrm{grande}
+ \end{eqnarray*}
+\end{VV}
+
+\subsection{Soma com índices}
+
+O comando \comando{soma} introduz a notação para uma soma
+finita com índices, por padrão, com $n$ termos, mas um
+parâmetro opcional permite alterar esse valor. Sua sintaxe é
+
+\begin{VV}
+   \soma[número de termos]{letra do termo da soma}
+\end{VV}
+
+\begin{figure}[!ht]
+\centering
+ \begin{tabular}{|l|c|}
+  \hline
+  Comando & Efeito \\ \hline
+  \verb|$\soma{x}$| & $\soma{x}$ \\ \hline
+  \verb|$\soma[m]{x}$| & $\soma[m]{x}$ \\ \hline
+  \verb|$\soma[29]{x}$| & $\soma[29]{x}$ \\ \hline
+\end{tabular}
+ \caption{Soma de termos com índice}
+\end{figure}
+
+Verifique que essa tabela consta na lista de figuras, esse erro
+foi cometido de propósito para exemplificar que não se deve usar
+o ambiente \ambiente{figure} para outros elementos a não ser
+figuras, sob pena de erro como este na confecção da lista de
+figuras.
+
+\subsection{Soma com potências}
+
+O comando \comando{pot} introduz a notação para uma soma
+finita com potências, por padrão, com $n$ termos, mas um
+parâmetro opcional permite alterar esse valor. Sua sintaxe é
+\begin{VV}
+   \pot[número de termos]{letra do termo da soma}
+\end{VV}
+
+\begin{table}[!ht]
+\centering
+ \begin{tabular}{|l|c|}
+  \hline
+  Comando & Efeito \\ \hline
+  \verb|$\pot{x}$| & $\pot{x}$ \\ \hline
+  \verb|$\pot[m]{x}$| & $\pot[m]{x}$ \\ \hline
+  \verb|$\pot[29]{x}$| & $\pot[29]{x}$ \\ \hline
+\end{tabular}
+ \caption{Soma de termos com índice}
+\end{table}
+
+O fragmento \verb!\[ 1+\pot{x} = \dfrac{ 1-x^{n+1} }{1-x} \]!
+produz
+\[
+1+\pot{x} = \dfrac{1-x^{n+1}}{1-x}
+\]
+
+%%%\end{document}
