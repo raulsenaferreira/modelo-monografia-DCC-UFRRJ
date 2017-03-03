@@ -21,6 +21,7 @@ Para visualizar no ShareLatex, [clique aqui](https://www.sharelatex.com/project/
 Existem alguns editores online que você pode utilizar para escrever sua dissertação.
 Abaixo, estão listados alguns:
 * [ShareLatex](https://www.sharelatex.com/)
+* [Overleaf](https://www.overleaf.com/)
 
 ### Agradecimentos
 Este modelo foi gerado utilizando como base alguns projetos, como por exemplo o oferecido pelo professor [Adriano Cruz](http://equipe.nce.ufrj.br/adriano/index.php) e também o dos alunos Flávio Coutinho e Jonas Arêas.
